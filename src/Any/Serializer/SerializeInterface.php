@@ -5,7 +5,7 @@
  * @package BEAR.Serializer
  * @license http://opensource.org/licenses/bsd-license.php BSD
  */
-namespace BEAR\Serializer;
+namespace Any\Serializer;
 
 /**
  * Interface for Serialize
