@@ -1,5 +1,10 @@
 {
     "name": "any/serializer",
+    "description": "Serialize any value for logging",
+    "keywords": [
+        "serialize"
+    ],
+    "license": "BSD-3-Clause",
     "authors": [
         {
             "name": "Akihito Koriyama",
