@@ -1,5 +1,5 @@
 {
-    "name": "bear/serializer",
+    "name": "any/serializer",
     "authors": [
         {
             "name": "Akihito Koriyama",
@@ -8,7 +8,7 @@
     ],
     "autoload":{
         "psr-0":{
-            "BEAR\\Serializer":"src/"
+            "Any\\Serializer":"src/"
         }
     }
 }
