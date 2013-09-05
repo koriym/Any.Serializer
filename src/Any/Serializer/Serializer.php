@@ -38,7 +38,8 @@ final class Serializer implements SerializeInterface
     public function removeUnserializable($value)
     {
         if (is_array($value)) {
-            return $this->serializeArray($value);
+            $this->serializeArray($value);
+            return $value;
         }
         $hash = spl_object_hash($value);
         if (in_array($hash, $this->hash)) {
@@ -68,13 +69,11 @@ final class Serializer implements SerializeInterface
         return $value;
     }
 
-    public function serializeArray(array $array)
+    public function serializeArray(array &$array)
     {
         foreach ($array as &$item) {
             $this->removeUnserializable($item);
         }
-
-        return;
     }
     /**
      * removeUnserializableInArray
@@ -97,6 +96,8 @@ final class Serializer implements SerializeInterface
                 $value = null;
             }
         }
+
+        return $array;
     }
 
     /**
