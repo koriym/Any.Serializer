@@ -17,18 +17,18 @@ interface SerializeInterface
     /**
      * Serialize
      *
-     * @param $object
+     * @param $value
      *
      * @return string
      */
-    public function serialize($object);
+    public function serialize($value);
 
     /**
      * Remove unserializable item
      *
-     * @param $object
+     * @param $value
      *
      * @return mixed
      */
-    public function removeUnserializable($object);
+    public function removeUnserializable($value);
 }
