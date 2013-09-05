@@ -1,6 +1,6 @@
 <?php
 
-namespace BEAR\Serializer;
+namespace Any\Serializer;
 
 
 class A

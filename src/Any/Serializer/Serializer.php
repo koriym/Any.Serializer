@@ -5,7 +5,7 @@
  * @package BEAR.Serializer
  * @license http://opensource.org/licenses/bsd-license.php BSD
  */
-namespace BEAR\Serializer;
+namespace Any\Serializer;
 
 /**
  * Serializer
@@ -101,7 +101,8 @@ final class Serializer implements SerializeInterface
     private function removeReferenceItemInArray(array &$room)
     {
         $roomCopy = $room;
-        foreach ($room as $key => $val) {
+        $keys = array_keys($room);
+        foreach ($keys as $key) {
             if (is_array($roomCopy[$key])) {
                 $roomCopy[$key]['_test'] = true;
                 if (isset($room[$key]['_test'])) {
