@@ -30,5 +30,6 @@ interface SerializeInterface
      *
      * @return mixed
      */
-    public function removeUnserializable($value);
+    public function removeUnserializable($object);
 }
+
