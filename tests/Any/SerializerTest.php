@@ -51,6 +51,26 @@ class SerializerTest extends \PHPUnit_Framework_TestCase
         $serialized = (new Serializer)->serialize(new A);
         $this->assertInternalType('string', $serialized);
     }
+
+    public function testSerializeArrayType()
+    {
+        $serialized = (new Serializer)->serialize([new A, new B, [new A]]);
+        $this->assertInternalType('string', $serialized);
+
+        return $serialized;
+    }
+
+    /**
+     * @param $serialized
+     *
+     * @depends testSerializeArrayType
+     */
+    public function testSerializeArrayValue($serialized)
+    {
+        $array = unserialize($serialized);
+        $this->assertCount(3, $array);
+        $this->assertInstanceOf('Any\Serializer\A', $array[0]);
+    }
 }
 
 

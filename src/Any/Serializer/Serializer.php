@@ -25,46 +25,56 @@ final class Serializer implements SerializeInterface
     /**
      * {@inheritdoc}
      */
-    public function serialize($object)
+    public function serialize($value)
     {
         return serialize(
-            $this->removeUnserializable($object)
+            $this->removeUnserializable($value)
         );
     }
 
     /**
      * {@inheritdoc}
      */
-    public function removeUnserializable($object)
+    public function removeUnserializable($value)
     {
-        $hash = spl_object_hash($object);
+        if (is_array($value)) {
+            $this->serializeArray($value);
+            return $value;
+        }
+        $hash = spl_object_hash($value);
         if (in_array($hash, $this->hash)) {
-            $object = null;
+            $value = null;
 
-            return $object;
+            return $value;
         }
         $this->hash[] = $hash;
-        $props = (new \ReflectionObject($object))->getProperties();
+        $props = (new \ReflectionObject($value))->getProperties();
         foreach ($props as &$prop) {
             $prop->setAccessible(true);
-            $propVal = $prop->getValue($object);
+            $propVal = $prop->getValue($value);
             if (is_array($propVal)) {
                 $this->removeUnserializableInArray($propVal);
-                $prop->setValue($object, $propVal);
+                $prop->setValue($value, $propVal);
             }
             if (is_object($propVal)) {
                 $propVal = $this->removeUnserializable($propVal);
-                $prop->setValue($object, $propVal);
+                $prop->setValue($value, $propVal);
 
             }
             if ($this->isUnserializable($propVal)) {
-                $prop->setValue($object, null);
+                $prop->setValue($value, null);
             }
         }
 
-        return $object;
+        return $value;
     }
 
+    public function serializeArray(array &$array)
+    {
+        foreach ($array as &$item) {
+            $this->removeUnserializable($item);
+        }
+    }
     /**
      * removeUnserializableInArray
      *
@@ -86,6 +96,8 @@ final class Serializer implements SerializeInterface
                 $value = null;
             }
         }
+
+        return $array;
     }
 
     /**
