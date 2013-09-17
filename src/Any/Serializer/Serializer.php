@@ -8,14 +8,11 @@
 namespace Any\Serializer;
 
 /**
- * Serializer
- *
  * Serialize any object for logging purpose.
  *
- * @package BEAR.Serializer
  * @license http://opensource.org/licenses/bsd-license.php BSD
  */
-final class Serializer implements SerializeInterface
+class Serializer implements SerializeInterface
 {
     /**
      * @var array
@@ -53,7 +50,7 @@ final class Serializer implements SerializeInterface
             $prop->setAccessible(true);
             $propVal = $prop->getValue($value);
             if (is_array($propVal)) {
-                $this->removeUnserializableInArray($propVal);
+                $this->removeUnrealizableInArray($propVal);
                 $prop->setValue($value, $propVal);
             }
             if (is_object($propVal)) {
@@ -69,6 +66,9 @@ final class Serializer implements SerializeInterface
         return $value;
     }
 
+    /**
+     * @param array $array
+     */
     public function serializeArray(array &$array)
     {
         foreach ($array as &$item) {
@@ -76,13 +76,13 @@ final class Serializer implements SerializeInterface
         }
     }
     /**
-     * removeUnserializableInArray
+     * remove Unrealizable In Array
      *
      * @param array &$array
      *
      * @return array
      */
-    private function removeUnserializableInArray(array &$array)
+    private function removeUnrealizableInArray(array &$array)
     {
         $this->removeReferenceItemInArray($array);
         foreach ($array as &$value) {
@@ -90,7 +90,7 @@ final class Serializer implements SerializeInterface
                 $value = $this->removeUnserializable($value);
             }
             if (is_array($value)) {
-                $this->removeUnserializableInArray($value);
+                $this->removeUnrealizableInArray($value);
             }
             if ($this->isUnserializable($value)) {
                 $value = null;
@@ -126,7 +126,7 @@ final class Serializer implements SerializeInterface
     }
 
     /***
-     * Return is unserializable
+     * Return is unserialize
      *
      * @param mixed $value
      *
