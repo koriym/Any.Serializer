@@ -6,7 +6,7 @@ Any.Serializer enables to serialize any object. It removes all contained unseria
 Requirement
 -----------
 
- * PHP 5.4+
+ * PHP 5.3+
 
 Usage
 -----

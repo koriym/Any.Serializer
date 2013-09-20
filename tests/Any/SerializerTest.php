@@ -46,6 +46,16 @@ class B
 
 class SerializerTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var Serializer
+     */
+    private $serializer;
+
+    public function setUp()
+    {
+        parent::setUp();
+        $this->serializer = new Serializer;
+    }
 
     public function testSerialize()
     {
@@ -55,7 +65,7 @@ class SerializerTest extends \PHPUnit_Framework_TestCase
 
     public function testSerializeArrayType()
     {
-        $serialized = (new Serializer)->serialize([new A, new B, [new A]]);
+        $serialized =  $this->serializer->serialize([new A, new B, [new A]]);
         $this->assertInternalType('string', $serialized);
 
         return $serialized;
@@ -79,12 +89,13 @@ class SerializerTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(1, unserialize($result));
     }
 
-    public function testScalarRecursievArray()
+
+    public function testScalarRecursiveArray()
     {
         $a = new \stdClass;
         $b = ['b' => $a];
         $a->b = $b;
-        $a = (new Serializer)->serialize($a);
+        $a =  $this->serializer->serialize($a);
         $this->assertSame('O:8:"stdClass":1:{s:1:"b";a:1:{s:1:"b";N;}}', $a);
     }
 }
