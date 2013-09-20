@@ -26,10 +26,9 @@ interface SerializeInterface
     /**
      * Remove unserializable item
      *
-     * @param $value
+     * @param $object
      *
      * @return mixed
      */
     public function removeUnserializable($object);
 }
-
