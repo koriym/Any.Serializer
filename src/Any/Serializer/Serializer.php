@@ -34,7 +34,11 @@ class Serializer implements SerializeInterface
      */
     public function removeUnserializable($value)
     {
+        if (is_scalar($value)) {
+            return $value;
+        }
         if (is_array($value)) {
+            $this->removeReferenceItemInArray($value);
             $this->serializeArray($value);
             return $value;
         }

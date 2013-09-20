@@ -2,7 +2,8 @@
     "name": "any/serializer",
     "description": "Serialize any value for logging",
     "keywords": [
-        "serialize"
+        "serialize",
+        "make it possible"
     ],
     "license": "BSD-3-Clause",
     "authors": [

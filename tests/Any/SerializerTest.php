@@ -13,9 +13,9 @@ class A
 
     private $array = [];
 
-    private $globals = [];
-
     private $que;
+
+    private $ref;
 
     private $b;
 
@@ -25,10 +25,10 @@ class A
         $this->pdo = new \PDO('sqlite::memory:');
         $this->pdo2 = [new \PDO('sqlite::memory:')];
         $this->array = [$this->pdo];
-        $this->globals = [$GLOBALS];
         $this->netedArray = [[$this->pdo]];
         $this->netedArray = [[$this->pdo], $this];
         $this->que = new \SplPriorityQueue;
+        $this->ref = &$this->pdo;
         $this->b = new B;
     }
 }
@@ -46,6 +46,7 @@ class B
 
 class SerializerTest extends \PHPUnit_Framework_TestCase
 {
+
     public function testSerialize()
     {
         $serialized = (new Serializer)->serialize(new A);
@@ -71,6 +72,19 @@ class SerializerTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(3, $array);
         $this->assertInstanceOf('Any\Serializer\A', $array[0]);
     }
+
+    public function testScalarInt()
+    {
+        $result = (new Serializer)->serialize(1);
+        $this->assertSame(1, unserialize($result));
+    }
+
+    public function testScalarRecursievArray()
+    {
+        $a = new \stdClass;
+        $b = ['b' => $a];
+        $a->b = $b;
+        $a = (new Serializer)->serialize($a);
+        $this->assertSame('O:8:"stdClass":1:{s:1:"b";a:1:{s:1:"b";N;}}', $a);
+    }
 }
-
-
