@@ -39,7 +39,7 @@ class B
 
     public function __construct()
     {
-        $this->c = function(){};
+        $this->c = function () {};
     }
 }
 
